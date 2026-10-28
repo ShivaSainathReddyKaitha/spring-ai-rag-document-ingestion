@@ -18,7 +18,6 @@ public class RAGConfig {
 		this.vectorStore = vectorStore;
 	}
 	
-	@PostConstruct
 	public void LoadData() {
 		List<Document> documents = createDocument();
 		vectorStore.add(documents);

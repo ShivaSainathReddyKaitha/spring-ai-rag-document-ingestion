@@ -1,7 +1,10 @@
 package com.project.LLM.config;
 
+import java.util.List;
+
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
+import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.client.advisor.api.Advisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.MessageWindowChatMemory;
@@ -32,7 +35,7 @@ public class ChatConfig {
 								.build();
 
 		return builder
-				.defaultAdvisors(messageAdvisor)
+				.defaultAdvisors(List.of(messageAdvisor))
 				.build();
 	}
 	
