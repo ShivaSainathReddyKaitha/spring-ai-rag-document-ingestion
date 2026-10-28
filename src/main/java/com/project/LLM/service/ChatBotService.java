@@ -28,25 +28,13 @@ public class ChatBotService {
 		this.vectorStore = vectorStore;
 	}
 	
-	@Value("classpath:prompts/system_prompt_template.st")
-	private Resource systemPrompt;
+	
 	
 	public Flux<String> respondToUser(String message, String userName) {
 		
-		SearchRequest searchRequest = SearchRequest.builder()
-													.query(message)
-													.topK(3)
-													.similarityThreshold(0.5)
-													.build();
-		List<Document> similaritySearch = vectorStore.similaritySearch(searchRequest);
-		
-		List<@Nullable String> list = similaritySearch.stream().map(Document::getText).toList();
-		
 		return chatClient.prompt()
-					.system(promptSystemSpec -> promptSystemSpec.text(systemPrompt)
-							.param("documentSearchResult", list))
-					.user(message)
 				  .advisors(adviceSpec -> adviceSpec.param(CONVERSATION_ID, userName))
+				  .user(message)
 				  .stream()
 				  .content();
 	}
